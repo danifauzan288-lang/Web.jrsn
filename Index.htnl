@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Jurusan SMK 2026</title>
+<style>
+    :root{
+        --bg:#0f172a;
+        --card:#1e293b;
+        --border:#334155;
+        --text:#e2e8f0;
+        --muted:#94a3b8;
+        --accent:#38bdf8;
+        --yellow:#facc15;
+        --green:#4ade80;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+        font-family:'Segoe UI',system-ui,Arial,sans-serif;
+        background:var(--bg);
+        color:var(--text);
+        line-height:1.6;
+        padding:20px;
+    }
+   .container{max-width:1000px;margin:auto}
+    h1{text-align:center;color:var(--accent);font-size:2rem;margin-bottom:8px}
+   .subtitle{text-align:center;color:var(--muted);margin-bottom:25px}
+
+   .tabs{
+        display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:20px
+    }
+   .tab{
+        padding:10px 18px;
+        background:var(--card);
+        border:1px solid var(--border);
+        border-radius:8px;
+        cursor:pointer;
+        transition:0.2s;
+        font-weight:600
+    }
+   .tab:hover{border-color:var(--accent)}
+   .tab.active{background:var(--accent);color:#0f172a;border-color:var(--accent)}
+
+   .content{
+        background:var(--card);
+        border:1px solid var(--border);
+        border-radius:12px;
+        padding:30px;
+        min-height:400px;
+        animation:fadeIn 0.3s ease
+    }
+    @keyframes fadeIn{
+        from{opacity:0;transform:translateY(10px)}
+        to{opacity:1;transform:translateY(0)}
+    }
+
+   .content h2{color:var(--yellow);margin-bottom:15px}
+   .tags{margin-bottom:15px}
+   .tag{
+        display:inline-block;
+        background:var(--border);
+        padding:5px 12px;
+        border-radius:20px;
+        font-size:12px;
+        margin-right:8px;
+        margin-bottom:5px
+    }
+   .section{margin-bottom:25px}
+   .section h3{color:var(--accent);margin-bottom:10px;font-size:1.1rem}
+    ul{padding-left:20px}
+    li{margin-bottom:8px}
+   .career{color:var(--green);font-weight:600;margin-top:15px}
+   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}
+   .skill-card{
+        background:#0f172a;
+        padding:15px;
+        border-radius:8px;
+        border:1px solid var(--border)
+    }
+
+    @media(max-width:600px){
+       .content{padding:20px}
+        h1{font-size:1.5rem}
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>📚 Panduan Jurusan SMK</h1>
+    <p class="subtitle">Klik jurusan untuk lihat materi & prospek karir</p>
+
+    <div class="tabs" id="tabs"></div>
+    <div class="content" id="content"></div>
+</div>
+
+<script>
+const jurusan = [
+{
+    id:"tkj",
+    nama:"TKJ - Teknik Komputer dan Jaringan",
+    tags:["IT","Networking","Server","Cybersecurity"],
+    fokus:"Fokus ke komputer, jaringan internet, server, dan troubleshooting sistem IT.",
+    materi:[
+        "Merakit PC/Laptop & instalasi Windows, Linux",
+        "Konfigurasi Router Mikrotik, Cisco, Access Point, VLAN",
+        "Server: Web Server, DNS, DHCP, Mail Server, File Server",
+        "Dasar Pemrograman: HTML, CSS, PHP, Python",
+        "Database MySQL & dasar manajemen database",
+        "Keamanan Jaringan & Ethical Hacking dasar",
+        "Troubleshooting jaringan & hardware"
+    ],
+    karir:[
+        "IT Support / Helpdesk",
+        "Network Engineer / Administrator",
+        "Server Administrator",
+        "Web Developer Junior",
+        "Freelance IT & Jasa Instalasi Jaringan",
+        "Teknisi Data Center"
+    ]
+},
+{
+    id:"tkr",
+    nama:"TKR - Teknik Kendaraan Ringan",
+    tags:["Otomotif","Mobil","Mesin","Kelistrikan"],
+    fokus:"Fokus ke perawatan, perbaikan, dan diagnosa mobil bensin & diesel.",
+    materi:[
+        "Sistem Mesin: pembongkaran, overhoul, tune up",
+        "Sistem Kelistrikan & AC Mobil",
+        "Sistem Rem, Suspensi, Kemudi, dan Transmisi",
+        "Sistem Injeksi EFI & Common Rail Diesel",
+        "Membaca Wiring Diagram & Diagnosa OBD Scanner",
+        "K3 dan Standar Keselamatan Bengkel Otomotif"
+    ],
+    karir:[
+        "Mekanik Bengkel Resmi Toyota, Honda, Daihatsu",
+        "Service Advisor",
+        "Teknisi AC Mobil",
+        "Wirausaha Bengkel Mobil",
+        "Quality Control Otomotif"
+    ]
+},
+{
+    id:"tsm",
+    nama:"TSM - Teknik Sepeda Motor",
+    tags:["Otomotif","Motor","Injeksi","CVT"],
+    fokus:"Spesialis perawatan dan perbaikan sepeda motor manual & matic.",
+    materi:[
+        "Mesin 2 Tak & 4 Tak: prinsip kerja & perbaikan",
+        "Sistem Injeksi PGM-FI, SFI, ECU & Sensor",
+        "Transmisi Manual & CVT Matic",
+        "Sistem Kelistrikan & Pengapian Motor",
+        "Diagnosa Kerusakan pakai Scanner Motor",
+        "Bongkar Pasang & Modifikasi Ringan"
+    ],
+    karir:[
+        "Mekanik AHASS, Yamaha, Suzuki, Kawasaki",
+        "Teknisi Injeksi Motor",
+        "Wirausaha Bengkel Motor",
+        "Sales Sparepart & Aksesoris Motor"
+    ]
+},
+{
+    id:"tav",
+    nama:"TAV - Teknik Audio Video",
+    tags:["Elektronika","Broadcasting","IoT","CCTV"],
+    fokus:"Fokus ke elektronika audio, video, broadcasting, dan sistem elektronik rumah tangga.",
+    materi:[
+        "Dasar Elektronika Analog & Digital",
+        "Service TV LED/LCD, Amplifier, Speaker, Sound System",
+        "Instalasi CCTV, Parabola, dan Jaringan LAN",
+        "Mikrokontroler Arduino, ESP32, IoT Dasar",
+        "Sistem Broadcasting: Kamera, Mixing Audio, Editing Video",
+        "Membaca Skema Rangkaian Elektronika"
+    ],
+    karir:[
+        "Teknisi Elektronika",
+        "Teknisi Broadcasting TV/Radio",
+        "Teknisi CCTV & Security System",
+        "Sound Engineer",
+        "Teknisi IoT & Smart Home"
+    ]
+},
+{
+    id:"akl",
+    nama:"AKL - Akuntansi Keuangan Lembaga",
+    tags:["Akuntansi","Pajak","Perkantoran","Excel"],
+    fokus:"Fokus ke pembukuan, perpajakan, dan penyusunan laporan keuangan perusahaan.",
+    materi:[
+        "Dasar Akuntansi: Jurnal, Buku Besar, Neraca Saldo",
+        "Akuntansi Perusahaan Dagang, Jasa, Manufaktur",
+        "Perpajakan: PPN, PPh 21, 23, 25, e-Faktur",
+        "Software Akuntansi: Zahir, MYOB, Accurate, Jurnal.id",
+        "Excel Akuntansi: Pivot, VLOOKUP, HLOOKUP, Macro",
+        "Administrasi Perkantoran & Kearsipan"
+    ],
+    karir:[
+        "Staff Akuntansi / Finance",
+        "Staff Pajak",
+        "Admin Keuangan & Kasir",
+        "Bank & Koperasi",
+        "Staff Gudang & Inventory"
+    ]
+}
+];
+
+const tabsEl = document.getElementById("tabs");
+const contentEl = document.getElementById("content");
+
+function renderTabs(){
+    jurusan.forEach((j,index)=>{
+        const btn = document.createElement("div");
+        btn.className = "tab" + (index===0? " active" : "");
+        btn.textContent = j.id.toUpperCase();
+        btn.onclick = ()=>showJurusan(index);
+        tabsEl.appendChild(btn);
+    });
+}
+
+function showJurusan(index){
+    document.querySelectorAll(".tab").forEach((t,i)=>{
+        t.classList.toggle("active", i===index);
+    });
+
+    const j = jurusan[index];
+    contentEl.innerHTML = `
+        <h2>${j.nama}</h2>
+        <div class="tags">${j.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+
+        <div class="section">
+            <p><strong>Fokus:</strong> ${j.fokus}</p>
+        </div>
+
+        <div class="section">
+            <h3>📖 Materi yang Dipelajari</h3>
+            <div class="grid">
+                ${j.materi.map(m=>`<div class="skill-card">• ${m}</div>`).join("")}
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>💼 Prospek Karir</h3>
+            <ul>
+                ${j.karir.map(k=>`<li>${k}</li>`).join("")}
+            </ul>
+            <p class="career">Tips: Pilih sesuai minat. SMK itu 70% praktik, jadi aktif ikut praktik industri/PKL ya.</p>
+        </div>
+    `;
+}
+
+renderTabs();
+showJurusan(0);
+</script>
+</body>
+</html>
